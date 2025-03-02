@@ -107,3 +107,48 @@ body {
         font-size: 20px;
     }
 }
+/* Discord Button Styles */
+.discord-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.discord-btn {
+    background: #5865F2;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.discord-btn:hover {
+    background: #4752C4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.discord-btn:active {
+    transform: translateY(0);
+}
+
+/* Discord logo animation */
+@keyframes discord-bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.discord-btn:hover::before {
+    content: "🎮";
+    animation: discord-bounce 0.8s infinite;
+}
