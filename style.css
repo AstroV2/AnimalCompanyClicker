@@ -1,0 +1,109 @@
+/* General page styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* Container for content centering */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* VR Stage where animals appear */
+#vrStage {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Animal character styling */
+.animal {
+    width: 150px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    image-rendering: crisp-edges;
+}
+
+.animal:hover {
+    transform: scale(1.1) rotate(5deg);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+/* Currency display styling */
+.currency {
+    font-size: 24px;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    display: inline-block;
+}
+
+/* Shop items styling */
+.shop {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.upgrade {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.upgrade:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.upgrade.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Mood indicator styling */
+#companyMood {
+    font-size: 18px;
+    margin: 10px 0;
+    padding: 10px 20px;
+    background: rgba(0, 255, 157, 0.1);
+    border-radius: 50px;
+    display: inline-block;
+    border: 2px solid #00ff9d;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .shop {
+        grid-template-columns: 1fr;
+    }
+    
+    .animal {
+        width: 120px;
+    }
+    
+    .currency {
+        font-size: 20px;
+    }
+}
