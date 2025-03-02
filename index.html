@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Company Clicker</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #vrStage {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animal {
+            width: 150px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: absolute;
+        }
+
+        .animal:hover {
+            transform: scale(1.1);
+        }
+
+        .currency {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .shop {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .upgrade {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .upgrade:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .upgrade.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #companyMood {
+            font-size: 18px;
+            color: #00ff9d;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Animal Company VR Clicker</h1>
+        <div class="currency">
+            VR Coins: <span id="coins">0</span>
+        </div>
+        <div id="companyMood">Company Mood: 😊 Happy</div>
+        
+        <div id="vrStage">
+            <img src="https://cdn-icons-png.flaticon.com/512/194/194279.png" class="animal" id="mainAnimal" onclick="clickAnimal()">
+        </div>
+
+        <div class="shop">
+            <div class="upgrade" onclick="buyUpgrade('vrGloves')">
+                <h3>VR Gloves 🥊</h3>
+                <p>+2 coins per click</p>
+                <p>Cost: 50 coins</p>
+            </div>
+            <div class="upgrade" onclick="buyUpgrade('autoPetter')">
+                <h3>Auto-Petter 🤖</h3>
+                <p>1 coin/second</p>
+                <p>Cost: 100 coins</p>
+            </div>
+            <div class="upgrade" onclick="buyUpgrade('treats')">
+                <h3>Special Treats 🍬</h3>
+                <p>+5% company mood</p>
+                <p>Cost: 200 coins</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let gameState = {
+            coins: 0,
+            clickPower: 1,
+            autoPetters: 0,
+            mood: 100,
+            upgrades: {
+                vrGloves: 0,
+                autoPetter: 0,
+                treats: 0
+            }
+        };
+
+        function updateDisplay() {
+            document.getElementById('coins').textContent = gameState.coins;
+            document.getElementById('companyMood').textContent = 
+                `Company Mood: ${getMoodEmoji(gameState.mood)} ${getMoodText(gameState.mood)}`;
+        }
+
+        function getMoodEmoji(mood) {
+            if(mood >= 80) return '😄';
+            if(mood >= 50) return '😊';
+            if(mood >= 30) return '😐';
+            if(mood >= 10) return '😟';
+            return '😭';
+        }
+
+        function getMoodText(mood) {
+            if(mood >= 80) return 'Ecstatic';
+            if(mood >= 50) return 'Happy';
+            if(mood >= 30) return 'Neutral';
+            if(mood >= 10) return 'Stressed';
+            return 'Critical';
+        }
+
+        function clickAnimal() {
+            gameState.coins += gameState.clickPower;
+            gameState.mood = Math.min(100, gameState.mood + 0.5);
+            updateDisplay();
+            
+            // Add animation effect
+            const animal = document.getElementById('mainAnimal');
+            animal.style.transform = 'scale(0.9)';
+            setTimeout(() => animal.style.transform = 'scale(1)', 100);
+        }
+
+        function buyUpgrade(type) {
+            const costs = {
+                vrGloves: 50,
+                autoPetter: 100,
+                treats: 200
+            };
+
+            if(gameState.coins >= costs[type]) {
+                gameState.coins -= costs[type];
+                
+                switch(type) {
+                    case 'vrGloves':
+                        gameState.clickPower += 2;
+                        gameState.upgrades.vrGloves++;
+                        break;
+                    case 'autoPetter':
+                        gameState.autoPetters++;
+                        gameState.upgrades.autoPetter++;
+                        break;
+                    case 'treats':
+                        gameState.mood = Math.min(100, gameState.mood + 5);
+                        gameState.upgrades.treats++;
+                        break;
+                }
+                
+                updateDisplay();
+            }
+        }
+
+        // Game loop
+        setInterval(() => {
+            gameState.coins += gameState.autoPetters;
+            gameState.mood = Math.max(0, gameState.mood - 0.1);
+            updateDisplay();
+        }, 1000);
+
+        // Initial setup
+        updateDisplay();
+    </script>
+</body>
+</html>
